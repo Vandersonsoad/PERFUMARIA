@@ -72,12 +72,12 @@ public class login extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jTextField2 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtlogin = new javax.swing.JTextField();
         btnlogar = new javax.swing.JButton();
         lblLogo = new javax.swing.JLabel();
+        txtsenha = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -88,6 +88,9 @@ public class login extends javax.swing.JFrame {
         jLabel1.setText("Senha:");
 
         btnlogar.setText("LOGAR!");
+        btnlogar.addActionListener(this::btnlogarActionPerformed);
+
+        txtsenha.setText("jPasswordField1");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -100,11 +103,11 @@ public class login extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(170, 170, 170)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtlogin, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(127, 127, 127)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(142, 142, 142)
+                        .addComponent(txtsenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(40, 40, 40)
@@ -114,23 +117,21 @@ public class login extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(146, 146, 146)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(56, 56, 56)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(146, 146, 146)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtlogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
                 .addComponent(btnlogar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(236, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
+                .addComponent(txtsenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(384, 384, 384))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -152,6 +153,50 @@ public class login extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnlogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlogarActionPerformed
+        // TODO add your handling code here:
+        
+        //  Pegar os dados digitados pelo usuário
+    String loginDigitado = txtlogin.getText().trim();
+    String senhaDigitada = new String(txtsenha.getPassword()); 
+
+    //  Validação simples de campos vazios
+    if (loginDigitado.isEmpty() || senhaDigitada.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Por favor, preencha todos os campos!");
+        return;
+    }
+
+    try {
+        //  Chamar a DAO para verificar no banco de dados
+        dao.UsuarioDAO usuarioDAO = new dao.UsuarioDAO();
+        model.Usuario usuarioLogado = usuarioDAO.autenticarUsuario(loginDigitado, senhaDigitada);
+
+        //  Verificar se o usuário foi encontrado
+        if (usuarioLogado != null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Bem-vindo(a), " + usuarioLogado.getLogin() + "!");
+            
+            // CONTROLE DE NÍVEL DE ACESSO:
+            if (usuarioLogado.getPerfil() != null && usuarioLogado.getPerfil().equalsIgnoreCase("Administrador")) {
+                // Se for Admin, abre a tela de Fornecedor
+                telas.TelaFornecedor telaFornecedor = new telas.TelaFornecedor(); 
+                telaFornecedor.setVisible(true);
+            } else {
+                // Se for usuário comum, abre a tela de vendas
+                telas.RegistroV telaPrincipal = new telas.RegistroV(); 
+                telaPrincipal.setVisible(true);
+            }
+            
+            
+            this.dispose(); 
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Usuário ou senha incorretos!", "Erro de Autenticação", javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    } catch (Exception ex) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Erro técnico ao autenticar. Verifique o banco.", "Erro Interno", javax.swing.JOptionPane.ERROR_MESSAGE);
+        System.out.println("Erro no login: " + ex.getMessage());
+    }
+    }//GEN-LAST:event_btnlogarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -177,9 +222,9 @@ public class login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel lblLogo;
+    private javax.swing.JTextField txtlogin;
+    private javax.swing.JPasswordField txtsenha;
     // End of variables declaration//GEN-END:variables
 
 

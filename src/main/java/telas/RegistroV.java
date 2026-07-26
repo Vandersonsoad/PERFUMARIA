@@ -12,6 +12,8 @@ public class RegistroV extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RegistroV.class.getName());
 
+    private double valorTotalVenda = 0.0;
+        
     /**
      * Creates new form RegistroV
      */
@@ -28,21 +30,253 @@ public class RegistroV extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        btnadciten = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        btnvenda = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        txtquant = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablevendas = new javax.swing.JTable();
+        txtproduto = new javax.swing.JTextField();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        btnadciten.setText("Buscar:");
+        btnadciten.addActionListener(this::btnadcitenActionPerformed);
+
+        jButton2.setText("Consultar:");
+
+        btnvenda.setText("Pagar:");
+        btnvenda.addActionListener(this::btnvendaActionPerformed);
+
+        jButton4.setText("jButton4");
+
+        txtquant.setFont(new java.awt.Font("Arial Black", 1, 36)); // NOI18N
+        txtquant.setForeground(new java.awt.Color(0, 0, 0));
+        txtquant.setText("0");
+        txtquant.addActionListener(this::txtquantActionPerformed);
+
+        jTextField2.setFont(new java.awt.Font("Arial Black", 1, 52)); // NOI18N
+        jTextField2.setForeground(new java.awt.Color(0, 102, 51));
+        jTextField2.setText("0,00");
+
+        jLabel1.setBackground(new java.awt.Color(0, 153, 51));
+        jLabel1.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 102, 51));
+        jLabel1.setText("R$:");
+
+        jLabel2.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setText("Itens:");
+
+        tablevendas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tablevendas);
+
+        txtproduto.setText("jTextField1");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(btnadciten))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtquant, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(63, 63, 63)
+                .addComponent(btnvenda)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(73, 73, 73)
+                        .addComponent(jButton2)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(244, 244, 244)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(293, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton4)
+                        .addGap(119, 119, 119))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtproduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(432, 432, 432))))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(jButton4)
+                        .addGap(52, 52, 52)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(104, 104, 104)
+                        .addComponent(txtproduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtquant, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(btnvenda)
+                    .addComponent(btnadciten))
+                .addGap(37, 37, 37))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(26, 26, 26))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnvendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnvendaActionPerformed
+      if (valorTotalVenda == 0.0) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Adicione pelo menos um item antes de finalizar a venda!", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    // Pergunta de confirmação exibindo o valor real calculado matematicamente
+    int confirmar = javax.swing.JOptionPane.showConfirmDialog(
+        this, 
+        String.format("Confirmar fechamento de venda no valor total de R$ %.2f?", valorTotalVenda), 
+        "Fechar Venda", 
+        javax.swing.JOptionPane.YES_NO_OPTION
+    );
+
+    if (confirmar == javax.swing.JOptionPane.YES_OPTION) {
+        // Cria o modelo e preenche com o valor calculado matematicamente
+        model.Venda novaVenda = new model.Venda();
+        novaVenda.setValorTotal(valorTotalVenda);
+        novaVenda.setUsuario(null); 
+
+        // Grava no MySQL chamando o seu DAO
+        dao.VendaDAO vendaDAO = new dao.VendaDAO();
+        boolean salvou = vendaDAO.salvar(novaVenda);
+
+        if (salvou) {
+            javax.swing.JOptionPane.showMessageDialog(this, String.format("🎉 Venda de R$ %.2f salva com sucesso no banco de dados!", valorTotalVenda));
+            tablevendas.setText(""); // Limpa o painel de texto
+            valorTotalVenda = 0.0;   // Zera o acumulador para a próxima venda
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Erro ao gravar a venda no banco de dados.", "Erro no Banco", javax.swing.JOptionPane.ERROR_MESSAGE);
+        } 
+    
+    } 
+    
+        
+    }//GEN-LAST:event_btnvendaActionPerformed
+
+    private void btnadcitenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnadcitenActionPerformed
+        String nomeProduto = txtproduto.getText().trim();
+    String quantStr = txtquant.getText().trim();
+
+    if (nomeProduto.isEmpty() || quantStr.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Preencha o produto e a quantidade!", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    try {
+        int quantidade = Integer.parseInt(quantStr);
+        if (quantidade <= 0) {
+            javax.swing.JOptionPane.showMessageDialog(this, "A quantidade deve ser maior que zero!", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        //  Busca o produto real no banco de dados
+        dao.ProdutoDAO pDao = new dao.ProdutoDAO();
+        model.Produto produtoReal = pDao.buscarPorNome(nomeProduto);
+
+        //  Valida se o produto realmente existe no cadastro
+        if (produtoReal == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Produto não encontrado no cadastro! Verifique o nome digitado.", "Produto Inexistente", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        //  Valida se há estoque disponível
+        if (produtoReal.getQuantidadeEstoque() < quantidade) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Estoque insuficiente! Estoque atual: " + produtoReal.getQuantidadeEstoque(), "Sem Estoque", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Calcula o estoque restante
+        int novoEstoque = produtoReal.getQuantidadeEstoque() - quantidade;
+        
+        // Atualiza no banco de dados usando o DAO
+        boolean atualizouEstoque = pDao.atualizarEstoque(produtoReal.getId(), novoEstoque);
+
+        if (!atualizouEstoque) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Erro ao atualizar o estoque no banco de dados. A operação foi cancelada.", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return; // Interrompe para não vender sem dar baixa
+        }
+      
+
+        //  Calcula usando o preço real do banco de dados e acumula
+        double subtotal = produtoReal.getPrecoVenda() * quantidade;
+        valorTotalVenda += subtotal; 
+
+        // Adiciona a linha detalhada na área de texto
+        tablevendas.append(String.format("Produto: %-20s | Qtd: %-5d | Preço Unit: R$ %-7.2f | Subtotal: R$ %.2f\n", 
+                produtoReal.getNome(), quantidade, produtoReal.getPrecoVenda(), subtotal));
+
+        // Limpa campos e foca no produto
+        txtproduto.setText("");
+        txtquant.setText("");
+        txtproduto.requestFocus();
+
+    } catch (NumberFormatException e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Insira um número inteiro válido para a quantidade!", "Erro de Digitação", javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
+        
+    }//GEN-LAST:event_btnadcitenActionPerformed
+
+    private void txtquantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtquantActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtquantActionPerformed
 
     /**
      * @param args the command line arguments
@@ -70,5 +304,17 @@ public class RegistroV extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnadciten;
+    private javax.swing.JButton btnvenda;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTable tablevendas;
+    private javax.swing.JTextField txtproduto;
+    private javax.swing.JTextField txtquant;
     // End of variables declaration//GEN-END:variables
 }
