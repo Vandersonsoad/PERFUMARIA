@@ -11,7 +11,7 @@ import java.util.logging.Logger;
  */
 public class ConexaoBanco {
     
-    // Configurações do Banco de Dados (Ajuste o nome do banco após o localhost:3306/)
+    // Configurações do Banco de Dados
     private static final String URL = "jdbc:mysql://localhost:3306/stockmaster_db?useTimezone=true&serverTimezone=UTC";
     private static final String USUARIO = "root"; // Usuário padrão do MySQL
     private static final String SENHA = "1234";   // Senha padrão configurada
@@ -51,14 +51,33 @@ public class ConexaoBanco {
      * Método de teste para executar a conexão diretamente pelo NetBeans.
      */
     public static void main(String[] args) {
-        System.out.println("Tentando conectar ao banco de dados...");
-        Connection conn = ConexaoBanco.getConexao();
+        System.out.println("=== INICIANDO TESTE DE CONEXÃO ===");
         
-        if (conn != null) {
-            System.out.println("🎉 SUCESSO! O Java conectou ao MySQL perfeitamente!");
-            ConexaoBanco.fecharConexao(conn);
-        } else {
-            System.out.println("❌ FALHA! A conexão falhou. Verifique se o MySQL está ativo no Workbench.");
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            System.out.println("1. Driver MySQL carregado com sucesso!");
+            
+            Connection conn = DriverManager.getConnection(URL, USUARIO, SENHA);
+            
+            if (conn != null) {
+                System.out.println("🎉 SUCESSO! Conexão realizada com o banco stockmaster_db!");
+                System.out.println("Banco conectado: " + conn.getCatalog());
+                conn.close();
+            }
+        } catch (ClassNotFoundException e) {
+            System.err.println("❌ ERRO: O Driver não foi encontrado no projeto.");
+        } catch (SQLException e) {
+            System.err.println("❌ FALHA NA CONEXÃO COM O BANCO:");
+            System.err.println("   Mensagem do MySQL: " + e.getMessage());
+            System.err.println("   Código do erro: " + e.getErrorCode());
+            
+            if (e.getErrorCode() == 1045) {
+                System.err.println("   👉 Causa: Usuário 'root' ou senha '1234' incorretos.");
+            } else if (e.getErrorCode() == 1049) {
+                System.err.println("   👉 Causa: O banco 'stockmaster_db' não existe no MySQL. Crie-o executando: CREATE DATABASE stockmaster_db;");
+            } else if (e.getErrorCode() == 0 || e.getErrorCode() == 1042) {
+                System.err.println("   👉 Causa: O serviço do MySQL está DESLIGADO no Windows/XAMPP.");
+            }
         }
     }
 }
